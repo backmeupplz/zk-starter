@@ -6,6 +6,8 @@ typechain
 .DS_Store
 build/*
 !build/.gitkeep
+public/*
+!public/.gitkeep
 
 # Hardhat files
 cache
