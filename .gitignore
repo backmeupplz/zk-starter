@@ -1,0 +1,28 @@
+node_modules
+.env
+coverage
+coverage.json
+typechain
+.DS_Store
+build/*
+!build/.gitkeep
+
+# Hardhat files
+cache
+artifacts
+
+# logs
+*.log
+
+# PoT files
+pot/*
+!pot/pot16_final.ptau
+
+# yarn
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
