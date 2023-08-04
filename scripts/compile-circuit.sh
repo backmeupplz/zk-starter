@@ -16,7 +16,7 @@ node "build/$1_js/generate_witness.js" "build/$1_js/$1.wasm" "inputs/input-$2.js
 
 # Generate zkey 0000
 starEcho "GENERATING ZKEY 0000"
-yarn snarkjs groth16 setup "build/$1.r1cs" pot/pot16_final.ptau "pot/$1_0000.zkey"
+yarn snarkjs groth16 setup "build/$1.r1cs" pot/pot$3_final.ptau "pot/$1_0000.zkey"
 
 # Apply random beacon as before
 starEcho "GENERATING FINAL ZKEY"
@@ -25,7 +25,7 @@ yarn snarkjs zkey beacon "pot/$1_0000.zkey" "pot/$1_final.zkey" \
 
 # Optional: verify final zkey
 starEcho "VERIFYING FINAL ZKEY"
-yarn snarkjs zkey verify "build/$1.r1cs" pot/pot16_final.ptau "pot/$1_final.zkey"
+yarn snarkjs zkey verify "build/$1.r1cs" pot/pot$3_final.ptau "pot/$1_final.zkey"
 
 # Export verification key
 starEcho "Exporting vkey"
@@ -44,8 +44,8 @@ yarn snarkjs groth16 verify "pot/$1_verification_key.json" "build/public-$2.json
 yarn snarkjs zkey export solidityverifier "pot/$1_final.zkey" "contracts/$1Verifier.sol"
 
 # Change Solidity compiler version and contract name
-sed -i '' 's/0.6.11;/0.8.17;\n\nimport "@big-whale-labs\/versioned-contract\/contracts\/Versioned.sol";/' "contracts/$1Verifier.sol"
-sed -i '' "s/contract Verifier {/contract $1Verifier is Versioned {\nconstructor(string memory _version) Versioned(_version) {}/" "contracts/$1Verifier.sol"
+sed -i '' 's/>=0.7.0 <0.9.0;/0.8.19;\n\nimport "@big-whale-labs\/versioned-contract\/contracts\/Versioned.sol";/' "contracts/$1Verifier.sol"
+sed -i '' "s/contract Groth16Verifier {/contract $1Verifier is Versioned {\nconstructor(string memory _version) Versioned(_version) {}/" "contracts/$1Verifier.sol"
 yarn prettify
 
 # Copy all the required files to the public directory
